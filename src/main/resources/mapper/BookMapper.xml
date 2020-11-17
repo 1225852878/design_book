@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.design_book.mapper.BookMapper">
+    <select id="queryAllBooks" resultType="Book" >
+ 		select * from book
+ 	</select>
+
+    <!-- 删除 -->
+    <delete id="deleteBookById" parameterType="Book">
+ 		delete from book where id=#{id}
+ 	</delete>
+
+    <!-- 模糊查找 -->
+    <select id="queryByName" resultType="Book">
+       select * from book where name like concat('%',#{name},'%')
+    </select>
+
+    <!-- 添加图书 -->
+    <insert id="addBook" parameterType="Book">
+    	insert into book(id,name,author,press,address,ebooks) values(#{id},#{name},#{author},#{press},#{address},#{ebooks})
+    </insert>
+
+    <select id="queryBookCount" parameterType="Book" resultType="Integer">
+ 		select count(*) from book where id=#{id}
+ 	</select>
+
+    <!-- 具体图书 -->
+    <select id="queryBookById" parameterType="Book" resultType="Book">
+ 		select * from book where id=#{id}
+ 	</select>
+
+    <!-- 修改书本 -->
+    <update id="editBook" parameterType="Book">
+ 		update book set name=#{name},author=#{author},press=#{press},address=#{address},ebooks=#{ebooks} where id=#{id}
+ 	</update>
+
+</mapper>

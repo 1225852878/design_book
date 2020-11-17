@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+    <script th:src="@{js/jquery-1.11.3.min.js}"></script>
+    <script>
+        function success() {
+            alert("注册成功")
+        }
+    </script>
+
+</head>
+<body style="background-image:url(/images/timg.jpg)">
+<div class="container">
+    <div class="col-md-4" style="background-color:#ffffff;margin:0 auto">
+        <center><h3>用户注册</h3></center>
+        <form th:action="@{fileUpload2}" th:method="post" enctype="multipart/form-data">
+            <div class="form-group"><label>学号:</label>
+                <input type="text" class="form-control" name="stuno"></div>
+            <div class="form-group"><label>密码:</label>
+                <input type="text" class="form-control" name="stupwd">
+            </div>
+            <div class="form-group"><label>姓名:</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group"><label>班级:</label>
+                <input type="text" class="form-control" name="pclass">
+            </div>
+            <div class="form-group"><label>个人照:</label>
+                <input type="file" name="picture">
+            </div>
+                <input type="submit" value="注册" class="btn btn-success form-control" onclick="success()">
+        </form>
+    </div>
+</div>
+</body>
+</html>

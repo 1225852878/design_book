@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图书管理员端</title>
+    <link rel="stylesheet" th:href="@{/css/boot-crm.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/metisMenu.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sb-admin-2.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script th:src="@{/js/metisMenu.min.js}"></script>
+    <script th:src="@{/js/sb-admin-2.js}"></script>
+    <script>
+        function deleteById() {
+            if (confirm('确实要删除该图书吗?')) {
+            }
+        }
+    </script>
+    <script>
+        function deleteBook() {
+            if (confirm('确实要删除选定图书吗?')) {
+            }
+        }
+    </script>
+
+</head>
+<body>
+<div id="wrapper">
+    <!--管理员端: <a th:href="@{logout}" class="btn btn-primary">退出</a>-->
+    <!-- 导航栏部分 -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation"
+         style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{queryAllBooks}">线上图书管理系统</a>
+        </div>
+        <!-- 导航栏右侧图标部分 -->
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+            <li>
+                <a th:href="@{logout}">
+                    <i class="fa fa-sign-out fa-fw"></i>退出登录
+                </a>
+            </li>
+            </li>
+            <!-- 用户信息和系统设置结束 -->
+        </ul>
+        <!-- 左侧显示列表部分 start-->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="查询内容...">
+                            <span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								<i class="fa fa-search" style="padding: 3px 0 3px 0;"></i>
+							</button>
+						</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a th:href="@{queryAllBooks}" class="active">
+                            <i class="fa fa-edit fa-fw"></i> 图书管理
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{queryAllStudent}" class="active">
+                            <i class="fa fa-edit fa-fw"></i> 用户管理
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 左侧显示列表部分 end-->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">图书管理</h1>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form th:action="@{queryByName}" class="form-inline">
+                    <div class="form-group">
+                        <label>图书名称:</label>
+                        <input th:type="text" th:name="name" class="form-control"/>
+                        <!--<input th:type="submit" th:value="查询"/>	<br><br>-->
+                        <button th:type="submit" class="btn btn-primary">查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div>
+            <form th:action="@{delete}">
+                <input type="submit" value="批量删除" onclick="deleteBook()" class="btn btn-primary" data-toggle="modal">
+
+                <a th:href="@{toaddBook}" class="btn btn-primary" data-toggle="modal"
+                   data-target="#newCustomerDialog">添加图书
+                    <!--<input type=button value="添加图书">-->
+                </a>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">图书信息列表</div>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>选择</th>
+                                    <th>书本编号</th>
+                                    <th>书名</th>
+                                    <th>作者</th>
+                                    <th>出版社</th>
+                                    <th>实体书位置</th>
+                                    <th>电子版</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--<tr th:each="book,items:${books}">
+                                    <td><input th:type="checkbox" th:name="ids" th:value="${book.id}"></td>
+                                    <td th:text="${book.id }"></td>
+                                    <td th:text="${book.name }"></td>
+                                    <td th:text="${book.author }"></td>
+                                    <td th:text="${book.press }"></td>
+                                    <td th:text="${book.address }"></td>
+                                    <td th:text="${book.ebooks }"></td>
+                                    <td>
+                                        <a th:href="@{queryBookById(id=${book.id })}" class="btn btn-primary btn-xs"
+                                           data-toggle="modal">修改</a>
+                                        <a th:href="@{deleteBookById(id=${book.id})}"
+                                           class="btn btn-danger btn-xs">删除</a>
+                                    </td>
+                                </tr>-->
+                                <tr th:each="pageInfo,items:${pageInfos.list}">
+                                    <td><input th:type="checkbox" th:name="ids" th:value="${pageInfo.id}"></td>
+                                    <td th:text="${pageInfo.id }"></td>
+                                    <td th:text="${pageInfo.name }"></td>
+                                    <td th:text="${pageInfo.author }"></td>
+                                    <td th:text="${pageInfo.press }"></td>
+                                    <td th:text="${pageInfo.address }"></td>
+                                    <td th:text="${pageInfo.ebooks }"></td>
+                                    <td>
+                                        <a th:href="@{queryBookById(id=${pageInfo.id })}" class="btn btn-primary btn-xs"
+                                           data-toggle="modal">修改</a>
+                                        <a th:href="@{deleteBookById(id=${pageInfo.id})}"
+                                           class="btn btn-danger btn-xs" onclick="deleteById()">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <br>
+                            </table>
+                            <div class="col-md-12 text-right" style="font-size: 15px">
+                                <br>
+                                <a th:if="${pageInfos.pageNum}!='1'" th:href="@{queryAllBooks}">首页</a>
+                                <!--<a th:if="${pageInfos.pageNum}!='1'"
+                                   th:href="@{queryAllBooks(pageNum=${pageInfos.hasPreviousPage}?${pageInfos.prePage}:1)}">首页
+                                </a>-->
+                                <a th:if="${pageInfos.pageNum}!=${pageInfos.pages}"
+                                   th:href="@{queryAllBooks(pageNum=${pageInfos.hasPreviousPage}?${pageInfos.prePage}:${pageInfos.pages})}">上一页
+                                </a>
+                                <a th:if="${pageInfos.pageNum}!=${pageInfos.pages}"
+                                   th:href="@{queryAllBooks(pageNum=${pageInfos.hasNextPage}?${pageInfos.nextPage}:${pageInfos.pages})}">下一页
+                                </a>
+                                <a th:if="${pageInfos.pageNum}!=${pageInfos.pages}"
+                                   th:href="@{queryAllBooks(pageNum=${pageInfos.pages})}">尾页
+                                </a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.design_book.mapper.StudentMapper">
+    <select id="login" resultType="Student" >
+ 		select * from student where stuno=#{stuno} and stupwd=#{stupwd}
+ 	</select>
+
+    <insert id="register" parameterType="Student">
+ 		insert into student(stuno,stupwd,name,pclass,photo) values(#{stuno},#{stupwd},#{name},#{pclass},#{photo})
+ 	</insert>
+
+	<select id="queryAllStudent" resultType="Student" >
+ 		select * from student
+ 	</select>
+
+	<select id="queryStudentByName" resultType="Student">
+       select * from student where name like concat('%',#{name},'%')
+    </select>
+
+	<delete id="deleteStudentById" parameterType="Student">
+ 		delete from student where stuno=#{stuno}
+ 	</delete>
+
+</mapper>

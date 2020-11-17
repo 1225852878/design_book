@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>用户登录界面</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+</head>
+<body style="background-image:url(/images/timg.jpg)">
+<a style="width: 800px"></a>
+<div class="container">
+    <div class="col-md-4" style="background-color:#ffffff;margin:0 auto">
+        <center><h3>线上图书</h3></center>
+        <form th:action="@{doLogin}" name="form" method="post">
+            <a th:text="${msg}"></a>
+            <div class="form-group"><label>用户名:</label>
+                <input type="text" class="form-control"  id="no"  name="sno"></div>
+            <div class="form-group"><label>密码</label>
+                <input type="password" class="form-control"  id="pwd" name="pwd">
+            </div>
+            <div class="form-group"><label>角色</label>
+                <!--<input type="password" class="form-control">-->
+                <select id="role" name="role">
+                    <option value="t">管理员</option>
+                    <option value="stu">用户</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="登陆" class="btn btn-success form-control">
+            </div>
+            <a th:href="@{toregister}">没有账号？去注册</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

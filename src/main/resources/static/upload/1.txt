@@ -1,0 +1,26 @@
+@Component	描述Spring中的Bean，它是一个泛化的概念，仅仅表示一个组件
+
+@Repository	将数据访问层(DAO)的类标识为Bean
+
+@Service		将业务层(Service)的类标识为Spring中的Bean
+
+@Controller	将控制层(Controller)的类标识为Bean 
+
+@Autowired	对Bean的属性、属性的setter方法及构造方法进行标注，配合对应的
+		注解处理器完成Bean的自动装配，默认是byType的自动装配
+
+@Resource	功能同@Autowired，有两个重要属性：name和type。分别解析为Bean
+		实例的名称和类型
+
+Spring JdbcTemplate的常用方法
+1.execute(String sql)方法可用于执行sql语句
+2.update()用于执行插入、更新和删除操作
+3.query()及queryForXXX()方法用于执行查询操作
+
+MVC设计模式：Model(模型)、View(视图)和Controller(控制)
+Model：       处理数据逻辑的部分，负责在数据库中存取数据
+View：         处理数据显示的部分，将Model层的数据展示出来
+Controller： 处理用户交互的部分，接收用户的请求，将请求发送给相对应的Model，
+	     控制哪个View显示相对应的数据
+
+
